@@ -50,9 +50,9 @@ LOGGING = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'afs',
-        'USER': 'afs_user',
-        'PASSWORD': 'afs1234',
+        'NAME': 'bet',
+        'USER': 'bet',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

@@ -7,15 +7,10 @@ from django.views.generic.base import TemplateView
 from apps.upload.views import sign_s3_upload
 urlpatterns = [
     url(r'^', include('django.contrib.auth.urls')),
-    url(r'^api/admin/', include('apps.afs_admin.urls')),
-    url(r'^admin2143/', include(admin.site.urls)),
+    url(r'^admin1701/', include(admin.site.urls)),
     url(r'^api/auth/', include('apps.authentication.urls')),
-    url(r'^api/', include('apps.events.urls')),
-    url(r'^api/', include('apps.news.urls')),
-    url(r'^api/', include('apps.user.urls')),
     url(r'^api/', include('apps.lookup.urls')),
-    url(r'^api/', include('apps.company.urls')),
-    url(r'^api/', include('apps.notifications.urls')),
+    url(r'^api/', include('apps.betbase.urls')),
     url(r'^upload/s3/sign/', sign_s3_upload,name="s3-sign"),
     url(r'^rest/auth/reset/', TemplateView.as_view(template_name='public/index.html')),
     url(r'^verify', TemplateView.as_view(template_name='public/index.html'),name='verify'),

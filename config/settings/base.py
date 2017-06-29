@@ -63,14 +63,11 @@ THIRD_PARTY_APPS = [
 ]
 PROJECT_APPS = [
     'apps.common',
-    'apps.events',
-    'apps.lookup',
-    'apps.news',
-    'apps.user',
-    'apps.company',
+    'apps.betbase',
     'apps.upload',
-    'apps.notifications',
-    'apps.afs_admin',
+    'apps.lookup',
+    'apps.authentication'
+
 ]
 INSTALLED_APPS = PREREQ_APPS+THIRD_PARTY_APPS+PROJECT_APPS
 MIDDLEWARE = [
@@ -163,7 +160,7 @@ USE_TZ = False
 
 # static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_ROOT = PROJECT_PATH+'../frontend/public/'
+STATIC_ROOT = PROJECT_PATH+'/public/'
 STATIC_URL = '/public/'
 STATICFILES_DIRS = (
 
