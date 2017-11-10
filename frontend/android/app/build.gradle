@@ -175,6 +175,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-svg')
+    compile project(':react-native-fbsdk')
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }

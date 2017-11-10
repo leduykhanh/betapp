@@ -14,17 +14,17 @@ export default class FooterTabs extends Component {
         <Footer>
           <FooterTab>    
             
-            <Button vertical onPress={() => {Actions.dashboard()}} active={currentScene === '_dashboard'}>
+            <Button vertical onPress={() => {Actions.replace('dashboard')}} active={currentScene === '_dashboard'}>
               <Icon active name="home" size={22} color={currentScene === '_dashboard'? "#4740c7" : "grey"}/>
               <Text>Home</Text>
             </Button>
 
-            <Button vertical onPress={() => Actions.wallet()} active={currentScene === '_wallet'} >
+            <Button vertical onPress={() => Actions.replace('wallet')} active={currentScene === '_wallet'} >
               <Icon name="wallet" size={22} color={currentScene === '_wallet'? "#4740c7" : "grey"}/>
               <Text>Wallet</Text>
             </Button>
             
-            <Button vertical active={currentScene === '_transaction_history'} onPress={() => Actions.transaction_history()}>
+            <Button vertical active={currentScene === '_transaction_history'} onPress={() => Actions.replace('transaction_history')}>
               <Icon active name="history" size={22} color={currentScene === '_transaction_history'? "#4740c7" : "grey"}/>
               <Text>History</Text>
             </Button>

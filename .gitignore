@@ -8,3 +8,4 @@ frontend/android/.gradle
 frontend/ios/
 frontend/android/build/
 *.iml
+backend/b-ve/

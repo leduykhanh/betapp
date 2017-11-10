@@ -17,7 +17,6 @@ djrill==2.1.0
 jsonfield==1.0.3
 oauthlib==1.0.3
 psycopg2==2.6.2
-pycurl==7.43.0
 PyJWT==1.4.2
 python-dateutil==2.6.0
 python-social-auth==0.2.21
