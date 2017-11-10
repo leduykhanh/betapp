@@ -1,0 +1,10 @@
+node_modules/
+.expo/
+npm-debug.*
+.idea/workspace.xml
+android/app/build
+android/.idea
+android/.gradle
+ios/
+android/build/
+*.iml

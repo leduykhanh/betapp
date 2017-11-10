@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "sdkVersion": "21.0.0",
+    "android": {
+      "package": "com.koku.pay"
+    },
+    "ios": {
+      "bundleIdentifier": "com.koku.pay"
+    },
+    "name": "koku-ewallet",
+    "slug": "koku-ewallet",
+    "version": "0.2.0",
+    "icon": "./assets/images/splash.png",
+    "loading": {
+      "backgroundImage": "./assets/images/logo.png",
+      "backgroundColor": "#222127"
+    }
+  },
+  "name": "kokuewallet",
+  "displayName": "kokuPay"
+}

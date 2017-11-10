@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1185732504",
+    "firebase_url": "https://okupay-46cee.firebaseio.com",
+    "project_id": "okupay-46cee",
+    "storage_bucket": "okupay-46cee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1185732504:android:eb9e3ed5508b9010",
+        "android_client_info": {
+          "package_name": "com.koku.ewallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1185732504-muja5vgki0qi69e7tg1pgdeeim0il4pm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDizAfnn7rTTRiJdzKBaDCxLgaTKlahqUM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
