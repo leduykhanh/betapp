@@ -109,7 +109,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "com.koku.ewallet"
+        applicationId "com.jangkoo.predict"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 14

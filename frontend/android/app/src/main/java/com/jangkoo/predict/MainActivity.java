@@ -1,4 +1,4 @@
-package com.koku.ewallet;
+package com.jangkoo.predict;
 
 import com.facebook.react.ReactActivity;
 
@@ -11,5 +11,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "kokuewallet";
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 }

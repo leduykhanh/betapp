@@ -9,6 +9,7 @@ import * as actions from '../actions/userActions';
 import {ImageBackground, GradientButton} from '../components/common';
 import styles from './styles';
 import {KOKU_LOGO_URL} from '../constants';
+import { LoginButton,  AccessToken} from 'react-native-fbsdk';
 
 class Login extends Component {
 
@@ -82,12 +83,27 @@ class Login extends Component {
             </View>
             
             <View style={{...styles.heavyMargin, marginTop: 20}}>
-              <Text subtitle-inactive>Don't have an account? </Text>
               
               <View horizontal>
-                <Text subtitle-inactive>Contact </Text>
-                <Text underline subtitle-inactive>business@koku.io.</Text>
-              </View>
+                <LoginButton
+                  publishPermissions={["publish_actions"]}
+                  onLoginFinished={
+                    (error, result) => {
+                      if (error) {
+                        alert("login has error: " + result.error);
+                      } else if (result.isCancelled) {
+                        alert("login is cancelled.");
+                      } else {
+                        AccessToken.getCurrentAccessToken().then(
+                          (data) => {
+                            alert(data.accessToken.toString())
+                          }
+                        )
+                      }
+                    }
+                  }
+                  onLogoutFinished={() => alert("logout.")}/>
+                </View>
               
             </View>
  

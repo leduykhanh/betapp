@@ -1,4 +1,4 @@
-package com.koku.ewallet;
+package com.jangkoo.predict;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

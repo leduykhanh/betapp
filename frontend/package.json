@@ -33,6 +33,7 @@
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
     "react-native-datepicker": "^1.6.0",
+    "react-native-fbsdk": "^0.6.3",
     "react-native-fcm": "^10.0.3",
     "react-native-infinite-scroll": "^1.0.6",
     "react-native-infinite-scroll-view": "^0.4.3",
