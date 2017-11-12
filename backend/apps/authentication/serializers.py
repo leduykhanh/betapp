@@ -2,7 +2,7 @@ from allauth.account import app_settings as allauth_settings
 from allauth.utils import email_address_exists
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
-from apps.user.managers import AFSUserManager
+from apps.user.managers import BUserManager
 
 from apps.common.exception import NonFieldException
 
@@ -11,7 +11,7 @@ from rest_framework import serializers,exceptions
 from django.utils.translation import gettext as _
 from django.urls import reverse
 from rest_framework.authtoken.models import Token
-from apps.user.models import AFSUser
+from apps.user.models import BUser
 from django.contrib.auth import get_user_model, authenticate
 
 from apps.lookup.models import LKUPAccountType,LKUPLanguage,LKUPCountry,LKUPIndustry,LKUPRegion
@@ -49,7 +49,7 @@ JWTUserDetailsSerializer = import_callable(
     rest_auth_serializers.get('USER_DETAILS_SERIALIZER', UserDetailsSerializer)
 )
 
-class AFSJWTSerializer(serializers.Serializer):
+class BJWTSerializer(serializers.Serializer):
     """
     Serializer for JWT authentication.
     """
@@ -168,13 +168,13 @@ class RegisterSerializer(serializers.Serializer):
         mobile = data.get("mobile")
         mobile_cty_code = data.get("mobile_cty_code")
 
-        afsUser = AFSUserManager.create_afs_user(user=user, company=company, mobile=mobile,mobile_cty_code=mobile_cty_code)
+        BUser = BUserManager.create_B_user(user=user, company=company, mobile=mobile,mobile_cty_code=mobile_cty_code)
         AccountActivation.objects.create(user=user)
 
-        return afsUser
+        return BUser
 
 
-class AFSLoginSerializer(LoginSerializer):
+class BLoginSerializer(LoginSerializer):
     def validate(self, attrs):
         super().validate(attrs)
         user = attrs['user']

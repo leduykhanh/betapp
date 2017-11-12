@@ -53,7 +53,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
-    'boto',
+    # 'boto',
     'countries_plus',
     # 'oauth2_provider',
     # 'social.apps.django_app.default',
@@ -63,10 +63,11 @@ THIRD_PARTY_APPS = [
 ]
 PROJECT_APPS = [
     'apps.common',
-    'apps.betbase',
-    'apps.upload',
-    'apps.lookup',
-    'apps.authentication'
+    # 'apps.betbase',
+    # 'apps.upload',
+    # 'apps.lookup',
+    # 'apps.authentication',
+    'apps.user'
 
 ]
 INSTALLED_APPS = PREREQ_APPS+THIRD_PARTY_APPS+PROJECT_APPS

@@ -9,3 +9,4 @@ frontend/ios/
 frontend/android/build/
 *.iml
 backend/b-ve/
+backend/b-ev/

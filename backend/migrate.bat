@@ -1,0 +1,1 @@
+b-ev\Scripts\python manage.py migrate
