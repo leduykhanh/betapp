@@ -1,7 +1,7 @@
 """
 User API
 """
-from apps.company.managers import CompanyManager
+#from apps.company.managers import CompanyManager
 
 from apps.common.constants import ERR_NOT_ALLOWED
 
@@ -9,42 +9,42 @@ from apps.common.exception import JSONException
 
 from apps.lookup.models import LKUPLanguage
 
-from apps.notifications.signals import notify
+#from apps.notifications.signals import notify
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.utils import timezone
-from .models import AFSUser, UserConnect
+from .models import BUser, UserConnect
 from django.utils.translation import gettext as _
 from apps.common.mangers.email_manager import send_mail
 from django.db import transaction
-class AFSUserManager(object):
+class BUserManager(object):
     @staticmethod
     def filter(queryset, **filter_params):
 
         return queryset.filter(**filter_params)
 
     @staticmethod
-    def create_afs_user(user=None, **data):
+    def create_B_user(user=None, **data):
         if user is None:
             raise JSONException(ERR_NOT_ALLOWED, {"error": "No user"})
         error_list = []
         # try:
         if "company" in data.keys() and not data.get("company"):
             data.pop("company")
-        if data.get("company"):
-            company = CompanyManager.create_company(user=user, **data.pop("company"))
+        #if data.get("company"):
+         #   company = CompanyManager.create_company(user=user, **data.pop("company"))
             # if isinstance(company,dict) and company.get("error"):
             #     error_list.append(company.get("error"))
             #     raise Exception(error_list)
-            data["company"] = company
+          #  data["company"] = company
 
-        afs_user = AFSUser.objects.create(user=user,**data)
-        return afs_user
+        B_user = BUser.objects.create(user=user,**data)
+        return B_user
         # except Exception as e:
-        #     raise JSONException("create_afs_user", {"error": str(e)})
+        #     raise JSONException("create_B_user", {"error": str(e)})
 
     @staticmethod
-    def edit_afs_user(user=None, **data):
+    def edit_B_user(user=None, **data):
         if user is None:
             return ERR_NOT_ALLOWED
         try:
@@ -69,14 +69,14 @@ class AFSUserManager(object):
                 email_address.save()
             user.__dict__.update(user_data)
             user.save()
-            afs_user = AFSUser.objects.get(user=user)
-            afs_user.language = data.get("language")
-            afs_user.__dict__.update(**data)
-            if not afs_user.company:
-                afs_user.company = company
-            afs_user.save()
-            return afs_user
-        except AFSUser.DoesNotExist:
+            B_user = BUser.objects.get(user=user)
+            B_user.language = data.get("language")
+            B_user.__dict__.update(**data)
+            if not B_user.company:
+                B_user.company = company
+            B_user.save()
+            return B_user
+        except BUser.DoesNotExist:
             return {"error": "No user"}
 
     @transaction.atomic
@@ -175,7 +175,7 @@ class AFSUserManager(object):
 
         if not user_connect:
             user_connect = UserConnect.objects.create(requester=from_user, requester_company=from_user_company,
-                                                      acceptor=AFSUser.objects.get(user=to_company.creator),
+                                                      acceptor=BUser.objects.get(user=to_company.creator),
                                                       acceptor_company=to_company)
             to_company.save()
             profile_url = ("LC" if from_user.company.is_listed_company() else "FM") + "/" + str(

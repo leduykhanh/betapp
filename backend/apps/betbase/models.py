@@ -35,8 +35,8 @@ class Bet(models.Model):
         ("LIVE", STATUS_LIVE),
         ("DEFUNCT", STATUS_DEFUNCT),
     )
-    firstTeam = models.ForeignKey(Team)
-    secondTeam = models.ForeignKey(Team)
+    firstTeam = models.ForeignKey(Team, related_name='bet_firstTeam')
+    secondTeam = models.ForeignKey(Team, related_name='bet_secondTeam')
     state = models.CharField(max_length=10, choices = STATUS)
     firstScore = models.IntegerField(default =0)
     secondScore = models.IntegerField(default =0)

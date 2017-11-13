@@ -96,14 +96,14 @@ class BUser(models.Model):
 class UserConnect(BaseFollowModel):
 
     requester = models.ForeignKey(BUser, on_delete=models.CASCADE, related_name='request_user')
-    requester_company = models.ForeignKey(Company, null=True, blank=True, related_name='request_company')
+    #requester_company = models.ForeignKey(Company, null=True, blank=True, related_name='request_company')
     acceptor = models.ForeignKey(BUser, on_delete=models.CASCADE, related_name='accept_user')
-    acceptor_company = models.ForeignKey(Company, null=True, blank=True, related_name='acceptor_company')
+    #acceptor_company = models.ForeignKey(Company, null=True, blank=True, related_name='acceptor_company')
 
     class Meta:
         app_label = 'user'
         db_table = 'user_connect'
-        unique_together = ('requester', 'acceptor', 'requester_company', 'acceptor_company')
+        unique_together = ('requester', 'acceptor')
 
     def __str__(self):
         return str(self.requester) + ' to ' + str(self.acceptor)

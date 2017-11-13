@@ -63,10 +63,10 @@ THIRD_PARTY_APPS = [
 ]
 PROJECT_APPS = [
     'apps.common',
-    # 'apps.betbase',
+     'apps.betbase',
     # 'apps.upload',
-    # 'apps.lookup',
-    # 'apps.authentication',
+     'apps.lookup',
+     'apps.authentication',
     'apps.user'
 
 ]
@@ -140,10 +140,10 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'apps.authentication.serializers.RegisterSerializer'
 }
 REST_AUTH_SERIALIZERS ={
-    'JWT_SERIALIZER': 'apps.authentication.serializers.AFSJWTSerializer',
+    'JWT_SERIALIZER': 'apps.authentication.serializers.BJWTSerializer',
     'PASSWORD_RESET_SERIALIZER': 'apps.authentication.serializers.PasswordResetSerializer',
     'USER_DETAILS_SERIALIZER': 'apps.authentication.serializers.UserSerializer',
-    'LOGIN_SERIALIZER': 'apps.authentication.serializers.AFSLoginSerializer',
+    'LOGIN_SERIALIZER': 'apps.authentication.serializers.BLoginSerializer',
 }
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -198,7 +198,7 @@ LOGIN_REDIRECT_URL ='/dashboard'
 
 
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost', 'afs.goldenequator.com','139.59.240.73','stage.asiafundspace.com','asiafundspace.com', 'www.asiafundspace.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost', 'B.goldenequator.com','139.59.240.73','stage.asiafundspace.com','asiafundspace.com', 'www.asiafundspace.com']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -246,6 +246,6 @@ AWS_SECRET= "xqGWYmX9MsE6lb5X82H85g6A74nJCfZXuKC92viI"
 
 CACHE_MIDDLEWARE_ALIAS = "default"
 CACHE_MIDDLEWARE_SECONDS = 60
-CACHE_MIDDLEWARE_KEY_PREFIX = "afs"
+CACHE_MIDDLEWARE_KEY_PREFIX = "B"
 
 NOTIFICATIONS_USE_JSONFIELD = True

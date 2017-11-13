@@ -1,8 +1,8 @@
-from apps.user.models import AFSUser, UserConnect
-from apps.events.models import Event
+from apps.betbase.models import Bet, BetEvent
+
 from apps.authentication.views import UserSerializer
 
-from apps.company.serializers import CompanySerializer, DetailCompanySerializer
+
 
 
 from django.contrib.auth.models import AnonymousUser
@@ -10,15 +10,12 @@ from django.db.models import Q
 from rest_framework import serializers
 
 
-class AFSUserSerializer(serializers.ModelSerializer):
+class BetSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    company = CompanySerializer()
-    connections = serializers.SerializerMethodField()
-    connection_status = serializers.SerializerMethodField()
 
 
     class Meta:
-        model = AFSUser
+        model = Bet
         fields = ('user','company', 'language', 'mobile','mobile_cty_code','role','tel','profile_picture_url', 'connections', 'views_count','connection_status')
 
     def get_connections(self,obj):
@@ -37,9 +34,9 @@ class AFSUserSerializer(serializers.ModelSerializer):
 
         if request is not None and request.user and not isinstance(request.user, AnonymousUser):
             user = request.user
-            check = UserConnect.objects.filter((Q(requester__user__in=[user, obj.user]) & Q(acceptor__user__in=[user, obj.user]))
-                                               |(Q(requester_company=user.afsuser.company) & Q(acceptor__user= obj.user))
-                                                | (Q(acceptor__company=user.afsuser.company) & Q(requester__user = obj.user)))
+            check = BetEvent.objects.filter((Q(requester__user__in=[user, obj.user]) & Q(acceptor__user__in=[user, obj.user]))
+                                               |(Q(requester_company=user.Bet.company) & Q(acceptor__user= obj.user))
+                                                | (Q(acceptor__company=user.Bet.company) & Q(requester__user = obj.user)))
             if not check.exists():
                 return None
             else:
@@ -57,20 +54,13 @@ class AFSUserSerializer(serializers.ModelSerializer):
         return None
 
 
-class DetailAFSUserSerializer(AFSUserSerializer):
-    company = DetailCompanySerializer()
 
-    # class Meta:
-    #     model = AFSUser
-    #     fields = ('url', 'user', 'company', 'language', 'mobile', 'role', 'tel', 'profile_picture_url', 'connections')
-
-
-class SimpleAFSUserSerializer(serializers.ModelSerializer):
+class SimpleBetSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     connection_status = serializers.SerializerMethodField()
 
     class Meta:
-        model = AFSUser
+        model = Bet
         fields = ('user', 'profile_picture_url', 'connection_status','role')
 
     def to_representation(self, obj):
@@ -86,7 +76,7 @@ class SimpleAFSUserSerializer(serializers.ModelSerializer):
 
         if request is not None and request.user and not isinstance(request.user, AnonymousUser):
             user = request.user
-            check = UserConnect.objects.filter(requester__user__in=[user, obj.user],
+            check = BetEvent.objects.filter(requester__user__in=[user, obj.user],
                                                acceptor__user__in=[user, obj.user])
             if not check.exists():
                 return None
@@ -103,15 +93,8 @@ class SimpleAFSUserSerializer(serializers.ModelSerializer):
         return None
 
 
-class UserConnectSerializer(serializers.ModelSerializer):
-    # requester = AFSUserSerializer()
-    # acceptor = AFSUserSerializer()
-    # requester_company = CompanySerializer()
-    # acceptor_company = CompanySerializer()
-    user = serializers.SerializerMethodField()
-    company = serializers.SerializerMethodField()
-    connection_status = serializers.SerializerMethodField()
-    is_approver = serializers.SerializerMethodField()
+class BetEventSerializer(serializers.ModelSerializer):
+
 
     def get_user(self,obj):
         request = self.context.get('request')
@@ -122,9 +105,9 @@ class UserConnectSerializer(serializers.ModelSerializer):
 
 
             if requester.user.id != request.user.id:
-                return AFSUserSerializer(requester,many=False).data
+                return BetSerializer(requester,many=False).data
             else:
-                return AFSUserSerializer(acceptor,many=False).data
+                return BetSerializer(acceptor,many=False).data
 
         return None
 
@@ -160,7 +143,7 @@ class UserConnectSerializer(serializers.ModelSerializer):
 
         if request is not None and request.user and not isinstance(request.user, AnonymousUser):
             user = request.user
-            check = UserConnect.objects.filter(requester__user=obj.requester,
+            check = BetEvent.objects.filter(requester__user=obj.requester,
                                                acceptor__user=obj.acceptor)
             if not check.exists():
                 return None
@@ -177,19 +160,12 @@ class UserConnectSerializer(serializers.ModelSerializer):
         return None
 
     class Meta:
-        model = UserConnect
+        model = BetEvent
         fields = ('id', 'user','connection_status','company','is_approver')
 
 
-class UserConnectReverseSerializer(serializers.ModelSerializer):
-    # requester = AFSUserSerializer()
-    # acceptor = AFSUserSerializer()
-    # requester_company = CompanySerializer()
-    # acceptor_company = CompanySerializer()
-    user = serializers.SerializerMethodField()
-    company = serializers.SerializerMethodField()
-    connection_status = serializers.SerializerMethodField()
-    is_approver = serializers.SerializerMethodField()
+class BetEventReverseSerializer(serializers.ModelSerializer):
+
 
     def get_user(self,obj):
         request = self.context.get('request')
@@ -200,9 +176,9 @@ class UserConnectReverseSerializer(serializers.ModelSerializer):
 
 
             if requester.user.id == request.user.id:
-                return AFSUserSerializer(requester,many=False).data
+                return BetSerializer(requester,many=False).data
             else:
-                return AFSUserSerializer(acceptor,many=False).data
+                return BetSerializer(acceptor,many=False).data
 
         return None
 
@@ -238,7 +214,7 @@ class UserConnectReverseSerializer(serializers.ModelSerializer):
 
         if request is not None and request.user and not isinstance(request.user, AnonymousUser):
             user = request.user
-            check = UserConnect.objects.filter(requester__user=obj.requester,
+            check = BetEvent.objects.filter(requester__user=obj.requester,
                                                acceptor__user=obj.acceptor)
             if not check.exists():
                 return None
@@ -255,16 +231,13 @@ class UserConnectReverseSerializer(serializers.ModelSerializer):
         return None
 
     class Meta:
-        model = UserConnect
+        model = BetEvent
         fields = ('id', 'user','connection_status','company','is_approver')
 
 
 
 class UserRecommendedSerializer(serializers.Serializer):
-    user = AFSUserSerializer()
-    company = CompanySerializer()
-    connection_status = serializers.SerializerMethodField()
-    id = serializers.SerializerMethodField()
+
 
     def get_id(self,obj):
         return str(obj.user.user_id)+"-"+str(obj.company.id)
@@ -274,13 +247,6 @@ class UserRecommendedSerializer(serializers.Serializer):
 
 class StorySerializer(serializers.Serializer):
 
-    title = serializers.CharField()
-    image = serializers.CharField()
-    user = serializers.SerializerMethodField()
-    date_published = serializers.DateTimeField(format="%d-%b-%Y %H:%M")
-    item_type = serializers.CharField()
-    id = serializers.IntegerField()
-    item = serializers.SerializerMethodField()
 
 
     def get_item(self,obj):
@@ -292,4 +258,4 @@ class StorySerializer(serializers.Serializer):
             return NewsSerializer(obj).data
 
     def get_user(self, obj):
-        return AFSUserSerializer(AFSUser.objects.get(user=obj.user)).data
+        return BetSerializer(Bet.objects.get(user=obj.user)).data

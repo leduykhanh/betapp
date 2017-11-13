@@ -15,7 +15,7 @@ from apps.user.models import BUser
 from django.contrib.auth import get_user_model, authenticate
 
 from apps.lookup.models import LKUPAccountType,LKUPLanguage,LKUPCountry,LKUPIndustry,LKUPRegion
-from apps.company.managers import CompanyManager
+#from apps.company.managers import CompanyManager
 from rest_auth.serializers import LoginSerializer
 from django.db import transaction
 from django.conf import settings

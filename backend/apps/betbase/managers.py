@@ -1,7 +1,7 @@
 """
 User API
 """
-from apps.company.managers import CompanyManager
+# from apps.company.managers import CompanyManager
 
 from apps.common.constants import ERR_NOT_ALLOWED
 
@@ -9,15 +9,15 @@ from apps.common.exception import JSONException
 
 from apps.lookup.models import LKUPLanguage
 
-from apps.notifications.signals import notify
+# from apps.notifications.signals import notify
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.utils import timezone
-from .models import AFSUser, UserConnect
+from .models import Bet, BetEvent
 from django.utils.translation import gettext as _
 from apps.common.mangers.email_manager import send_mail
 from django.db import transaction
-class AFSUserManager(object):
+class BetManager(object):
     @staticmethod
     def filter(queryset, **filter_params):
 
@@ -38,7 +38,7 @@ class AFSUserManager(object):
             #     raise Exception(error_list)
             data["company"] = company
 
-        afs_user = AFSUser.objects.create(user=user,**data)
+        afs_user = Bet.objects.create(user=user,**data)
         return afs_user
         # except Exception as e:
         #     raise JSONException("create_afs_user", {"error": str(e)})
@@ -69,20 +69,20 @@ class AFSUserManager(object):
                 email_address.save()
             user.__dict__.update(user_data)
             user.save()
-            afs_user = AFSUser.objects.get(user=user)
+            afs_user = Bet.objects.get(user=user)
             afs_user.language = data.get("language")
             afs_user.__dict__.update(**data)
             if not afs_user.company:
                 afs_user.company = company
             afs_user.save()
             return afs_user
-        except AFSUser.DoesNotExist:
+        except Bet.DoesNotExist:
             return {"error": "No user"}
 
     @transaction.atomic
     def connect(from_user, to_user,request,silent=False):
         host = request.get_host()
-        from .serializers import UserConnectReverseSerializer
+        from .serializers import BetEventReverseSerializer
         if from_user == to_user:
             return to_user
         from_user_company = from_user.company
@@ -92,32 +92,32 @@ class AFSUserManager(object):
 
         if from_user.is_from_listed_company():
             actor = from_user_company
-            request_check = UserConnect.objects.filter(requester_company=from_user_company, acceptor=to_user)
+            request_check = BetEvent.objects.filter(requester_company=from_user_company, acceptor=to_user)
             if request_check.exists():
                 user_connect = request_check.get()
                 if user_connect.date_rejected:
                     user_connect.date_rejected = None
                     user_connect.save()
 
-            acceptor_check = UserConnect.objects.filter(requester=to_user, acceptor_company=from_user_company)
+            acceptor_check = BetEvent.objects.filter(requester=to_user, acceptor_company=from_user_company)
             if acceptor_check.exists():
                 acceptor_check.first().date_approved = timezone.now()
                 acceptor_check.first().save()
                 user_connect= acceptor_check.get()
         else:
-            request_check = UserConnect.objects.filter(requester=from_user, acceptor=to_user)
+            request_check = BetEvent.objects.filter(requester=from_user, acceptor=to_user)
             if request_check.exists():
                 user_connect = request_check.get()
                 if user_connect.date_rejected:
                     user_connect.date_rejected = None
                     user_connect.save()
-            acceptor_check = UserConnect.objects.filter(requester=to_user, acceptor=from_user)
+            acceptor_check = BetEvent.objects.filter(requester=to_user, acceptor=from_user)
             if acceptor_check.exists():
                 acceptor_check.first().date_approved = timezone.now()
                 acceptor_check.first().save()
                 user_connect =  acceptor_check.get()
         if not user_connect:
-            user_connect = UserConnect.objects.create(requester=from_user,requester_company= from_user_company, acceptor=to_user, acceptor_company=to_user_company)
+            user_connect = BetEvent.objects.create(requester=from_user,requester_company= from_user_company, acceptor=to_user, acceptor_company=to_user_company)
             to_user.save()
             profile_url = ("LC" if from_user.company.is_listed_company() else "FM")+"/"+ str(from_user.company.id) if from_user.company.is_listed_company() else str(from_user.user.id)
             if not silent:
@@ -133,49 +133,49 @@ class AFSUserManager(object):
         if not silent:
             notify.send(actor, recipient=to_user.user, target_object_id=str(from_user.user.id),
 
-        verb = 'connection', description = from_user.user.first_name + ' sent you a request',connection= UserConnectReverseSerializer(user_connect,many=False, context={"request":request}).data,
+        verb = 'connection', description = from_user.user.first_name + ' sent you a request',connection= BetEventReverseSerializer(user_connect,many=False, context={"request":request}).data,
                                         profile_picture_url = from_user.profile_picture_url,company_type=from_user.get_company_type())
         return user_connect
 
     @transaction.atomic
     def connect_to_company(from_user, to_company,request,silent=False):
         host = request.get_host()
-        from .serializers import UserConnectReverseSerializer
+        from .serializers import BetEventReverseSerializer
         if from_user.company == to_company:
             return to_company
         from_user_company = from_user.company
         user_connect = None
         actor = from_user
         if not from_user.is_from_listed_company():
-            request_check = UserConnect.objects.filter(requester=from_user, acceptor_company=to_company)
+            request_check = BetEvent.objects.filter(requester=from_user, acceptor_company=to_company)
             if request_check.exists():
                 user_connect = request_check.get()
                 if user_connect.date_rejected:
                     user_connect.date_rejected = None
                     user_connect.save()
 
-            acceptor_check = UserConnect.objects.filter(requester_company=to_company, acceptor=from_user)
+            acceptor_check = BetEvent.objects.filter(requester_company=to_company, acceptor=from_user)
             if acceptor_check.exists():
                 acceptor_check.first().date_approved = timezone.now()
                 acceptor_check.first().save()
                 user_connect =  acceptor_check.get()
         else:
             actor = from_user_company
-            request_check = UserConnect.objects.filter(requester_company=from_user.company, acceptor_company=to_company)
+            request_check = BetEvent.objects.filter(requester_company=from_user.company, acceptor_company=to_company)
             if request_check.exists():
                 user_connect = request_check.get()
                 if user_connect.date_rejected:
                     user_connect.date_rejected = None
                     user_connect.save()
-            acceptor_check = UserConnect.objects.filter(requester_company=to_company, acceptor_company=from_user.company)
+            acceptor_check = BetEvent.objects.filter(requester_company=to_company, acceptor_company=from_user.company)
             if acceptor_check.exists():
                 acceptor_check.first().date_approved = timezone.now()
                 acceptor_check.first().save()
                 user_connect = acceptor_check.get()
 
         if not user_connect:
-            user_connect = UserConnect.objects.create(requester=from_user, requester_company=from_user_company,
-                                                      acceptor=AFSUser.objects.get(user=to_company.creator),
+            user_connect = BetEvent.objects.create(requester=from_user, requester_company=from_user_company,
+                                                      acceptor=Bet.objects.get(user=to_company.creator),
                                                       acceptor_company=to_company)
             to_company.save()
             profile_url = ("LC" if from_user.company.is_listed_company() else "FM") + "/" + str(
@@ -191,14 +191,14 @@ class AFSUserManager(object):
                           )
         if not silent:
             notify.send(actor, recipient=to_company.creator,
-                verb='connection', description=from_user.user.first_name + ' sent you a request', connection= UserConnectReverseSerializer(user_connect,many=False, context={"request":request}).data ,
+                verb='connection', description=from_user.user.first_name + ' sent you a request', connection= BetEventReverseSerializer(user_connect,many=False, context={"request":request}).data ,
                         profile_picture_url=from_user.profile_picture_url,company_type=from_user.get_company_type())
 
         return user_connect
 
     @staticmethod
     def disconnect(from_user, to_user):
-        query_set = UserConnect.objects.filter(requester__in = [from_user,to_user], acceptor__in=[to_user,from_user])
+        query_set = BetEvent.objects.filter(requester__in = [from_user,to_user], acceptor__in=[to_user,from_user])
         user_connect= None
         if query_set.exists():
             user_connect = query_set.get()
@@ -210,8 +210,8 @@ class AFSUserManager(object):
 
     @staticmethod
     def disconnect_company(from_user, to_company):
-        query_set_a = UserConnect.objects.filter(requester=from_user, acceptor__company=to_company)
-        query_set_b = UserConnect.objects.filter(requester_company=to_company, acceptor=from_user)
+        query_set_a = BetEvent.objects.filter(requester=from_user, acceptor__company=to_company)
+        query_set_b = BetEvent.objects.filter(requester_company=to_company, acceptor=from_user)
         user_connect = None
         if query_set_a.exists():
             user_connect = query_set_a.get()
@@ -226,7 +226,7 @@ class AFSUserManager(object):
 
     @staticmethod
     def reject_request(to_user, requestid):
-        request_check = UserConnect.objects.filter(pk=requestid, acceptor=to_user)
+        request_check = BetEvent.objects.filter(pk=requestid, acceptor=to_user)
         user_connect = None
         if request_check.exists():
             request_check.update(date_rejected = timezone.now())
@@ -236,8 +236,8 @@ class AFSUserManager(object):
 
     @staticmethod
     def approve_request(to_user, requestid,request):
-        from .serializers import UserConnectReverseSerializer
-        request_check = UserConnect.objects.filter(pk=requestid, acceptor=to_user)
+        from .serializers import BetEventReverseSerializer
+        request_check = BetEvent.objects.filter(pk=requestid, acceptor=to_user)
         user_connect = None
         actor = None
         if request_check.exists():
@@ -252,10 +252,10 @@ class AFSUserManager(object):
                 actor = user_connect.acceptor
             notify.send(actor, recipient=user_connect.requester.user,
                         verb='connection', description=to_user.user.first_name + ' has accepted your request',
-                        connection=UserConnectReverseSerializer(user_connect, many=False,
+                        connection=BetEventReverseSerializer(user_connect, many=False,
                                                                 context={"request": request}).data,
                         profile_picture_url=to_user.profile_picture_url, company_type=to_user.get_company_type())
-            # to_user.connects.add(UserConnect.objects.get(pk=requestid).requester)
+            # to_user.connects.add(BetEvent.objects.get(pk=requestid).requester)
             # to_user.save()
         to_user.save()
         return user_connect
