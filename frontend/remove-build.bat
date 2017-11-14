@@ -1,0 +1,1 @@
+@RD /S /Q "E:\koku.mobile.wallet\android\app\build"
