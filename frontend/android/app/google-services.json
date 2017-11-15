@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "1185732504",
-    "firebase_url": "https://okupay-46cee.firebaseio.com",
-    "project_id": "okupay-46cee",
-    "storage_bucket": "okupay-46cee.appspot.com"
+    "project_number": "834459604677",
+    "firebase_url": "https://predict-b7c31.firebaseio.com",
+    "project_id": "predict-b7c31",
+    "storage_bucket": "predict-b7c31.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1185732504:android:eb9e3ed5508b9010",
+        "mobilesdk_app_id": "1:834459604677:android:b5e41629c7496a0f",
         "android_client_info": {
           "package_name": "com.jangkoo.predict"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1185732504-muja5vgki0qi69e7tg1pgdeeim0il4pm.apps.googleusercontent.com",
+          "client_id": "834459604677-qm1qhsp9ilgvcj3ch9u7r379kea8c343.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDizAfnn7rTTRiJdzKBaDCxLgaTKlahqUM"
+          "current_key": "AIzaSyD_RzwfYr7esmDkY5cdR4WYnJzuAbP-CWE"
         }
       ],
       "services": {
