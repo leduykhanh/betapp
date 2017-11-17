@@ -7,6 +7,7 @@
 import { AsyncStorage } from 'react-native';
 import { ErrorMessages, Firebase, FirebaseRef } from '@constants/';
 import * as RecipeActions from '../recipes/actions';
+import * as Api from './apis';
 
 /**
   * Get Login Credentials from AsyncStorage
@@ -61,7 +62,7 @@ function getUserData(dispatch) {
 /**
   * Login to Firebase with Email/Password
   */
-export function login(formData = {}, verifyEmail = false) {
+export function loginFirebase(formData = {}, verifyEmail = false) {
   if (Firebase === null) {
     return () => new Promise((resolve, reject) =>
       reject({ message: ErrorMessages.invalidFirebase }));
@@ -187,7 +188,7 @@ export function updateProfile(formData = {}) {
 /**
   * Logout
   */
-export function logout() {
+export function logoutFirebase() {
   if (Firebase === null) {
     return () => new Promise((resolve, reject) =>
       reject({ message: ErrorMessages.invalidFirebase }));
@@ -195,6 +196,49 @@ export function logout() {
 
   return dispatch => Firebase.auth()
     .signOut()
+    .then(() => {
+      removeCredentialsFromStorage();
+      RecipeActions.resetFavourites(dispatch);
+      dispatch({ type: 'USER_LOGOUT' });
+    });
+}
+
+export function login(formData = {}, verifyEmail = false) {
+
+
+  // Reassign variables for eslint ;)
+  let email = formData.Email || '';
+  let password = formData.Password || '';
+
+  return async (dispatch) => {
+    // When no credentials passed in, check AsyncStorage for existing details
+    if (!email || !password) {
+      const credsFromStorage = await getCredentialsFromStorage();
+      if (!email) email = credsFromStorage.email;
+      if (!password) password = credsFromStorage.password;
+    }
+
+    // Update Login Creds in AsyncStorage
+    if (email && password) saveCredentialsToStorage(email, password);
+
+    // We're ready - let's try logging them in
+    return Api.login(email, password)
+      .then((res) => {
+        if (res && res.token) {
+
+        }
+
+        // Send to Redux
+        return dispatch({
+          type: 'USER_LOGIN',
+          data: res.data,
+        });
+      }).catch((err) => { throw err; });
+  };
+}
+
+export function logout() {
+  return dispatch => Api.logout()
     .then(() => {
       removeCredentialsFromStorage();
       RecipeActions.resetFavourites(dispatch);

@@ -13,11 +13,11 @@ export default function userReducer(state = initialState, action) {
     case 'USER_LOGIN': {
       if (action.data) {
         const input = action.data;
+        
         return {
           ...state,
-          uid: input.uid,
-          email: input.email,
-          emailVerified: input.emailVerified,
+          token: input.token,
+          email: input.user.email
         };
       }
       return {};

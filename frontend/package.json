@@ -19,6 +19,7 @@
     "verbose": true
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "firebase": "^4.1.2",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
@@ -26,7 +27,7 @@
     "react-native-dotenv": "0.1.0",
     "react-native-elements": "^0.15.0",
     "react-native-google-analytics-bridge": "^5.0.0",
-    "react-native-router-flux": "3.39.2",
+    "react-native-router-flux": "^3.39.2",
     "react-native-side-menu": "^1.0.2",
     "react-native-tab-view": "0.0.67",
     "react-native-vector-icons": "^4.2.0",
