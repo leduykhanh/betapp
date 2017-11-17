@@ -198,7 +198,7 @@ LOGIN_REDIRECT_URL ='/dashboard'
 
 
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost', 'B.goldenequator.com','139.59.240.73','stage.asiafundspace.com','asiafundspace.com', 'www.asiafundspace.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost', 'B.goldenequator.com','139.59.240.73','stage.asiafundspace.com','asiafundspace.com', 'jangkoo.com']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
