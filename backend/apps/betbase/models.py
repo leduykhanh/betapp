@@ -9,11 +9,16 @@ class BetCategory(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
 
 class BetEvent(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     category = models.ForeignKey(BetCategory)
+
+    def __str__(self):
+        return self.name
 
 
 class Team(models.Model):
