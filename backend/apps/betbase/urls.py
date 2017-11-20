@@ -6,7 +6,7 @@ from .views import *
 router = DefaultRouter()
 
 router.register(r'^bet$', BetViewSet)
-router.register(r'betcategory$', BetCategoryViewSet)
+router.register(r'betcategory', BetCategoryViewSet)
 router.register(r'betevent', BetEventViewSet)
 
 urlpatterns = [

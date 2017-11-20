@@ -60,3 +60,4 @@ jest/*
 # Other
 #
 /.env
+/.pyc
