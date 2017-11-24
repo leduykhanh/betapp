@@ -37,9 +37,6 @@ class BetCategoryViewSet(ModelViewSet):
         return self.queryset
 
 class BetViewSet(ModelViewSet):
-    """
-    API endpoint that allows Bet to be viewed or edited.
-    """
     queryset = Bet.objects.all() 
     serializer_class = BetSerializer
     permission_classes = [AllowAny]

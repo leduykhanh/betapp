@@ -20,6 +20,7 @@ import Analytics from '@lib/analytics';
 
 // All redux reducers (rolled into one mega-reducer)
 import rootReducer from '@redux/index';
+import setAuthHeaderMiddleware from '@redux/middleware/setAuthHeaderMiddleware';
 
 // Connect RNRF with Redux
 const RouterWithRedux = connect()(Router);
@@ -28,6 +29,7 @@ const RouterWithRedux = connect()(Router);
 let middleware = [
   Analytics,
   thunk, // Allows action creators to return functions (not just plain objects)
+  setAuthHeaderMiddleware
 ];
 
 if (__DEV__) {

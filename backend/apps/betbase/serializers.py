@@ -1,4 +1,4 @@
-from apps.betbase.models import Bet, BetEvent, BetCategory
+from apps.betbase.models import Team, Bet, BetCategory, BetEvent
 
 from apps.authentication.views import UserSerializer
 
@@ -7,19 +7,34 @@ from django.db.models import Q
 from rest_framework import serializers
 
 
+class TeamSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Team
+        fields = ('__all__')  
+
+class BetEventSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BetEvent
+        fields = ('name', 'description', 'id')
+
 class BetSerializer(serializers.ModelSerializer):
 
+    firstTeam = TeamSerializer()
+    secondTeam = TeamSerializer()
+    betEvent = BetEventSerializer()
 
     class Meta:
         model = Bet
-        fields = ('firstTeam', 'secondTeam')
+        fields = ('__all__')
 
 
 class BetCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BetCategory
-        fields = ('name', 'description', 'id')
+        fields = ('__all__')
 
 class SimpleBetSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -38,20 +53,14 @@ class SimpleBetSerializer(serializers.ModelSerializer):
         return representation
 
 
-
-class BetEventSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = BetEvent
-        fields = ('name', 'description', 'id')
-
-
 class BetEventReverseSerializer(serializers.ModelSerializer):
 
 
     class Meta:
         model = BetEvent
-        fields = ('id', 'user','connection_status','company','is_approver')
+        fields = ('__all__')
+
+      
 
 
 

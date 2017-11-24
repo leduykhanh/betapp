@@ -1,14 +1,9 @@
-/**
- * App Constants
- *
- * React Native Starter App
- * https://github.com/mcnamee/react-native-starter-app
- */
 
 import AppConfig from './config';
 import ErrorMessages from './errors';
-import Firebase, { FirebaseRef } from './firebase';
-export const LOGIN_API = 'http://jangkoo.com/api/auth/rest-auth/login/';
-export const LOGOUT_API = 'http://jangkoo.com/api/auth/rest-auth/logout/';
+const BASE_URL = 'http://jangkoo.com/api';
+export const LOGIN_API = `${BASE_URL}/auth/rest-auth/login/`;
+export const LOGOUT_API = `${BASE_URL}/auth/rest-auth/logout/`;
+export const BET_API = `${BASE_URL}/bet`;
 
-export { AppConfig, ErrorMessages, Firebase, FirebaseRef };
+export { AppConfig, ErrorMessages };

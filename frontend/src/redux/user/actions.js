@@ -8,6 +8,7 @@ import { AsyncStorage } from 'react-native';
 import { ErrorMessages, Firebase, FirebaseRef } from '@constants/';
 import * as RecipeActions from '../recipes/actions';
 import * as Api from './apis';
+import serverCall from '../utils/serverCall';
 
 /**
   * Get Login Credentials from AsyncStorage
@@ -225,7 +226,7 @@ export function login(formData = {}, verifyEmail = false) {
     return Api.login(email, password)
       .then((res) => {
         if (res && res.token) {
-
+          serverCall.defaults.headers['Authorization'] = 'Bearer ' + res.token;
         }
 
         // Send to Redux
