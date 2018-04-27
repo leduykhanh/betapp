@@ -6,8 +6,8 @@ from .views import *
 router = DefaultRouter()
 
 router.register(r'bet', BetViewSet)
-# router.register(r'user/news', UserNewsViewSet)
-# router.register(r'user', AFSUserViewSet)
+router.register(r'betcategory', BetCategoryViewSet)
+router.register(r'betevent', BetEventViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls))

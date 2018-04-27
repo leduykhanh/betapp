@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(BetCategory)
 admin.site.register(BetEvent)
 admin.site.register(Bet)
+admin.site.register(Team)

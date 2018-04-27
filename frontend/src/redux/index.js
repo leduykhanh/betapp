@@ -13,6 +13,7 @@ import router from '@redux/router/reducer';
 import sideMenu from '@redux/sidemenu/reducer';
 import user from '@redux/user/reducer';
 import recipe from '@redux/recipes/reducer';
+import bet from '@redux/bet/reducer';
 
 // Combine all
 const appReducer = combineReducers({
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   sideMenu,
   user,
   recipe,
+  bet
 });
 
 // Setup root reducer

@@ -60,3 +60,5 @@ jest/*
 # Other
 #
 /.env
+/.pyc
+images/

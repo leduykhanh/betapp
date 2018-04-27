@@ -55,6 +55,7 @@ THIRD_PARTY_APPS = [
     'rest_auth.registration',
     # 'boto',
     'countries_plus',
+    'rest_framework_swagger'
     # 'oauth2_provider',
     # 'social.apps.django_app.default',
     # 'rest_framework_social_oauth2',
