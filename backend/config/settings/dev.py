@@ -1,4 +1,3 @@
-__author__ = 'Pok'
 from config.settings.base import *
 WEBPACK_DEV_SERVER = True
 DEBUG = True

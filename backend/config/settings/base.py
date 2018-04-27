@@ -184,7 +184,7 @@ DATE_INPUT_FORMATS = ('%d-%M-%Y','%Y-%m-%d')
 
 
 EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
-MANDRILL_API_KEY = "I--rT3bG1N8aazuKFE-ykw"
+MANDRILL_API_KEY = ""
 EMAIL_HOST = 'smtp.mandrillapp.com' # Host for sending e-mail.
 # Port for sending e-mail.
 EMAIL_PORT = 587
@@ -240,8 +240,8 @@ JWT_AUTH = {
     "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7)
 
 }
-AWS_KEY = "AKIAJPNVDRLRAZDBZMOA"
-AWS_SECRET= "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"
+AWS_KEY = ""
+AWS_SECRET= ""
 
 
 CACHE_MIDDLEWARE_ALIAS = "default"
