@@ -1,6 +1,6 @@
 boto==2.45.0
 defusedxml==0.4.1
-django==1.10.3
+django==2.2.24
 django-allauth==0.29.0
 django-allauth-djrill==0.1.1
 django-braces==1.10.0
